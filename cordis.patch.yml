@@ -1,0 +1,43 @@
+# ============================================================================
+# dsh-plugin-prompt-optimizer —— DSH bundle patch
+# ============================================================================
+# 这是插件的装载声明：DSH 启动时按 bundle 层栈叠加各插件 patch，本文件把
+# client 半边（lib/client.js）插入 profile 的配置树。
+#
+# 安装方式（本地 link 安装，开发期用）：
+#   dsh plugin --profile desktop add link:D:\DeppSeekWork\deepseek-work1\dsh-plugin-prompt-optimizer
+#
+# 装完必须**完全重启 DSH**（退出进程再启动，不是只刷新界面）：
+# 客户端产物在启动期装载，重启前进不了页面。
+#
+# 装载行的两条硬约定：
+#   1) 装载条目的 id 与下面的 name 都必须是**裸包名**。写成
+#      dsh-plugin-prompt-optimizer/client 这种带斜杠的 specifier 会被 loader
+#      静默跳过 —— 界面上的入口消失，而测试全绿。
+#   2) 本文件只允许**一条** insert 装载行，多写会让同一插件被重复装载。
+# ============================================================================
+
+- insert:
+    # 提示词优化：conversation.input.activity 槽位上的 ✦ 入口按钮。
+    # 浮层（对比面板 / 设置面板 / 小条）全部由同一组件渲染，不占用第二个槽位。
+    - id: dsh-plugin-prompt-optimizer
+      name: dsh-plugin-prompt-optimizer
+    # ------------------------------------------------------------------------
+    # LLM 通路配置（可选；默认走本地引擎，不配也照常装载）。
+    #
+    # ★ 必须写在下面这个 config: 之下 —— 也就是装载条目自己的 config 字段
+    #   （与 id / name 平级）。写到别的层（例如 bundle 层或条目外层）会被 loader
+    #   原样保留：不报错，也不生效，表现就是「配了但界面永远回退本地」。
+    #
+    # ★ 缺 llmEndpoint 不阻断装载：此时 /api/prompt-optimizer/optimize 返回 501，
+    #   插件自动回退本地引擎，设置面板里 engine=llm 会标注「已回退本地」。
+    #
+    # 示例（把注释符去掉并填自己的值即可）：
+    #
+    # config:
+    #   llmEndpoint: https://api.example.com/v1/chat/completions  # 必填：http(s) 绝对地址，不带凭据/query/fragment
+    #   llmApiKey: sk-xxxxxxxx                                    # 可选：作为 Bearer 发给上游，只留在宿主侧
+    #   llmModel: gpt-4o-mini                                     # 可选：原样透传为请求体的 model
+    #   llmTemperature: 0.2                                       # 可选：0..2，默认 0.2
+    #   llmTimeoutMs: 30000                                       # 可选：5000..120000，默认 30000
+    # ------------------------------------------------------------------------

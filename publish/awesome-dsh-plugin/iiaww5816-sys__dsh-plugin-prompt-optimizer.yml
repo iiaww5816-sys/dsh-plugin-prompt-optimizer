@@ -1,0 +1,6 @@
+url: https://github.com/iiaww5816-sys/dsh-plugin-prompt-optimizer
+name: iiaww5816-sys/dsh-plugin-prompt-optimizer
+category: ui
+description:
+  en: Rewrites the draft already sitting in your DeepSeek Harness composer into role / task / context / output-requirements / constraints, writes it back into the same input box, keeps the original one click away, and refuses results that flip negations, numbers or antonym pairs such as raise-lower.
+  zh: 把 DSH 输入框里已有的草稿改写为「角色／任务／上下文／输出要求／约束」五段结构并回填同一个输入框，原文可一键还原；结果若对调否定词、数字或提高／降低这类反义词则判为不保真。

@@ -1,0 +1,47 @@
+{
+  "name": "dsh-plugin-prompt-optimizer",
+  "version": "0.4.1",
+  "description": "DSH 提示词优化插件：输入框工具行 ✦ 一键读取草稿、结构化改写、回填并可还原；v0.2 起支持多模型 API 管理与守恒校验；v0.3 起密钥可选、endpoint 允许 query、引擎默认 auto；v0.3.1 修「添加模型/切引擎点了没反应」；v0.4 重写系统提示词（正向质量目标 + 四道自检 + few-shot + 类型分流）并把守恒口径改为硬 Token + 软覆盖率两层；v0.4.1 软守恒加反义极性层（同轴正反词被对调时判不保真）并修掉构建期端点自检误伤",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-primitives"
+      ]
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "prompt"
+  ],
+  "author": "iiaww5816-sys",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iiaww5816-sys/dsh-plugin-prompt-optimizer.git"
+  },
+  "homepage": "https://github.com/iiaww5816-sys/dsh-plugin-prompt-optimizer#readme",
+  "bugs": {
+    "url": "https://github.com/iiaww5816-sys/dsh-plugin-prompt-optimizer/issues"
+  },
+  "license": "MIT",
+  "private": true
+}
